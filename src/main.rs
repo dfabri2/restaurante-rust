@@ -2,10 +2,10 @@ use std::io;
 
 
 mod funcoes_restaurantes;
-use funcoes_restaurantes::{Product, add_item, list_items, remove_item};
+use funcoes_restaurantes::*;
 
 fn main() {
-    let mut v: Vec<Product> = Vec::new();
+    let mut v: Vec<Product> = load_from_file();
 
     let mut guess = String::new();
 
@@ -27,9 +27,11 @@ fn main() {
             }
             "2" => {  //adcionar
                 add_item(&mut v);
+                save_to_file(&v);
             }
             "3" => {  //retirar
-                remove_item(&mut v)
+                remove_item(&mut v);
+                save_to_file(&v);
             }
             "4" => {  //listar
                 list_items(&v);

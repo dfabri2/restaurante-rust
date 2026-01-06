@@ -1,5 +1,9 @@
-use std::io;
+use std::{fs, io};
+use serde::{Serialize, Deserialize};
 
+const FILE_PATH: &str = "produtos.json";
+
+#[derive(Serialize, Deserialize, Debug)]
 pub struct Product {
     name: String,
     price: u32,
@@ -10,6 +14,19 @@ impl Product {
 pub fn create_product(name: String, price: u32, code: u32) -> Product {
         Product{name, price, code}
     }
+}
+
+pub fn save_to_file(vec: &Vec<Product>) {
+    let json = serde_json::to_string_pretty(vec).expect("Erro ao serializar dados");
+
+    fs::write(FILE_PATH, json).expect("Erro ao gravar arquivo");
+}
+
+pub fn load_from_file() -> Vec<Product> {
+    if let Ok(data) = fs::read_to_string(FILE_PATH) {
+        return serde_json::from_str(&data).unwrap_or_else(|_| Vec::new());
+    }
+    Vec::new()
 }
 
 pub fn remove_item(vec: &mut Vec<Product>) {
