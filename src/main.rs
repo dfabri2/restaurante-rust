@@ -2,20 +2,17 @@ use std::io;
 
 
 mod funcoes_restaurantes;
-use funcoes_restaurantes::{Item, add_item, list_items};
+use funcoes_restaurantes::{Product, add_item, list_items, remove_item};
 
 fn main() {
-    let mut v: Vec<Item> = Vec::new();
+    let mut v: Vec<Product> = Vec::new();
 
     let mut guess = String::new();
 
     
     loop {
         println!("escolha sua opção!");
-        println!("1 - sair");
-        println!("2 - adcionar item");
-        println!("3 - retirar item");
-        println!("4 - listar itens");
+        println!("1 - sair | 2 - adcionar item | 3 - retirar item | 4 - listar itens");
         guess.clear();
 
         io::stdin()
@@ -32,7 +29,7 @@ fn main() {
                 add_item(&mut v);
             }
             "3" => {  //retirar
-                v.pop();
+                remove_item(&mut v)
             }
             "4" => {  //listar
                 list_items(&v);
