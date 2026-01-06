@@ -43,10 +43,13 @@ pub fn add_item(vec: &mut Vec<Product>) {
     let price: u32 = iprice.trim().parse().expect("erro ao traduzir preço");
     let code: u32 = icode.trim().parse().expect("erro ao traduzir código");
 
-    let product: Product = Product::create_product(name, price, code);
-    vec.push(product);
-
-    println!("Produto inserido com sucesso!");
+    if vec.iter().any(|p|p.code == code) {
+        println!("erro, já existe um item com o código informado");
+    } else {
+        let product: Product = Product::create_product(name.trim().to_string(), price, code);
+        vec.push(product);
+        println!("Produto inserido com sucesso!");
+    }
 }
 
 pub fn list_items(vec: &Vec<Product>) {
