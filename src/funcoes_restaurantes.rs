@@ -1,4 +1,4 @@
-use std::{collections::{HashMap, hash_map}, fs, hash::Hash, io};
+use std::{collections::HashMap, fs, io};
 use serde::{Serialize, Deserialize};
 
 const FILE_PATH: &str = "produtos.json";
