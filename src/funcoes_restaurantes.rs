@@ -18,7 +18,6 @@ pub fn create_product(name: String, price: u32, code: u32) -> Product {
 
 pub fn save_to_file(vec: &Vec<Product>) {
     let json = serde_json::to_string_pretty(vec).expect("Erro ao serializar dados");
-
     fs::write(FILE_PATH, json).expect("Erro ao gravar arquivo");
 }
 
@@ -52,7 +51,6 @@ pub fn add_item(vec: &mut Vec<Product>) {
     let mut iprice: String = String::new();
     let mut icode: String = String::new();
 
-
     io::stdin().read_line(&mut name).expect("erro ao ler nome");
     io::stdin().read_line(&mut iprice).expect("erro ao ler preço");
     io::stdin().read_line(&mut icode).expect("erro ao ler código");
@@ -70,9 +68,13 @@ pub fn add_item(vec: &mut Vec<Product>) {
 }
 
 pub fn list_items(vec: &Vec<Product>) {
-    println!("---------------------");
-    for i in vec {
-        println!("code: {} | name: {} | price: {}", i.code, i.name, i.price);
+    if vec.is_empty() {
+        println!("não há produtos registrados");
+    } else {
+        println!("---------------------");
+        for i in vec {
+            println!("code: {} | name: {} | price: {}", i.code, i.name, i.price);
+        }
+        println!("---------------------");     
     }
-    println!("---------------------");
 }
