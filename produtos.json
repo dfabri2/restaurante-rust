@@ -1,7 +1,10 @@
-[
-  {
-    "name": "misto quente",
-    "price": 100,
-    "code": 2
+{
+  "1": {
+    "name": "hamburguer de frango",
+    "price": 35
+  },
+  "2": {
+    "name": "batata frita",
+    "price": 12
   }
-]
+}
