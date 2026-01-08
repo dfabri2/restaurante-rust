@@ -21,10 +21,17 @@ pub fn save_to_file(map: &HashMap<u32, Product>) {
 }
 
 pub fn load_from_file() -> HashMap<u32, Product> {
-    if let Ok(data) = fs::read_to_string(FILE_PATH) {
-        return serde_json::from_str(&data).unwrap_or_else(|_| HashMap::new());
+    let reader: Result<String, io::Error> = fs::read_to_string(FILE_PATH);
+    
+    match reader {
+        Ok(data) => {
+            match serde_json::from_str(&data) {
+                Ok(map) => map,
+                Err(_) => HashMap::new(),
+            }
+        }
+        Err(_) => HashMap::new(),
     }
-    HashMap::new()
 }
 
 pub fn remove_item(map: &mut HashMap<u32, Product>) {
