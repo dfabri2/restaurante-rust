@@ -3,6 +3,7 @@ use serde::{Serialize, Deserialize};
 
 const FILE_PATH: &str = "produtos.json";
 
+/// Representa um item do menu do restaurante.
 #[derive(Serialize, Deserialize, Debug)]
 pub struct Product {
     name: String,
@@ -16,11 +17,13 @@ pub fn create_product(name: String, price: u32, code: u32) -> Product {
     }
 }
 
+/// Serializa o vetor de produtos e o salva no arquivo JSON.
 pub fn save_to_file(vec: &Vec<Product>) {
     let json = serde_json::to_string_pretty(vec).expect("Erro ao serializar dados");
     fs::write(FILE_PATH, json).expect("Erro ao gravar arquivo");
 }
 
+/// Desserializa o vetor, caso não tenha nada salvo no arquivo JSON, retorna um vetor vazio.
 pub fn load_from_file() -> Vec<Product> {
     if let Ok(data) = fs::read_to_string(FILE_PATH) {
         return serde_json::from_str(&data).unwrap_or_else(|_| Vec::new());
@@ -28,6 +31,7 @@ pub fn load_from_file() -> Vec<Product> {
     Vec::new()
 }
 
+/// Remove um item do vetor por meio de um código fornecido.
 pub fn remove_item(vec: &mut Vec<Product>) {
     let mut icode: String = String::new();
 
@@ -44,8 +48,9 @@ pub fn remove_item(vec: &mut Vec<Product>) {
     }
 }
 
+/// Adiciona um item no fim do vetor.
 pub fn add_item(vec: &mut Vec<Product>) {
-    println!("insira, nessa sequência, o nome, o preço e o código do produto a ser adcionado");
+    println!("insira, nessa sequência, o nome, o preço e o código do produto a ser adicionado");
     
     let mut name: String = String::new();
     let mut iprice: String = String::new();
@@ -67,6 +72,7 @@ pub fn add_item(vec: &mut Vec<Product>) {
     }
 }
 
+/// Lista os itens na ordem em que foram inseridos.
 pub fn list_items(vec: &Vec<Product>) {
     if vec.is_empty() {
         println!("não há produtos registrados");
